@@ -58,7 +58,7 @@
     color: black;
 }
 
-.chatReciever{
+.chatReceiver{
     background-color: var(--backgroundColorGreen);
     margin-left: auto;
 }
@@ -97,4 +97,23 @@
 .chatFooter > .css-78trlr-MuiButtonBase-root-MuiIconButton-root{
     padding: 10px;
     color:white;
+}
+
+.picker-container{
+    position: absolute;
+    min-width: 150px;
+    max-width: 300px;
+    bottom: 110px;
+}
+
+.selected-emoji{
+    font-size: 16px;
+}
+
+.emoji-icon{
+    cursor: pointer;
+    width: calc(100% - 40px);
+    border-radius: 3px;
+    border: solid 1px #999;
+    margin-bottom: 10px;
 }
