@@ -1,106 +1,102 @@
-import React, { useState } from 'react';
-import axios from '../../utils/axios';
-import EmojiPicker from 'emoji-picker-react';
-import { Avatar, IconButton } from '@mui/material';
-import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
-import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
-import MicOutlinedIcon from '@mui/icons-material/MicOutlined';
+import React, { useState } from "react";
+import axios from "../../utils/axios";
+import EmojiPicker from "emoji-picker-react";
+import { IconButton } from "@mui/material";
+import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
+import MicOutlinedIcon from "@mui/icons-material/MicOutlined";
+import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
 
 import "./chat.css";
 
 export default function Chat({ messages }) {
-  const [selectedEmoticons, setSelectedEmoticons] = useState([]); // Stav pro vybrané emotikony
-  const [input, setInput] = useState('');
-  const [showPicker, setShowPicker] = useState(false);
+  const [message, setMessage] = useState("");
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [selectedEmoticons, setSelectedEmoticons] = useState([]);
+
+  const handleInputChange = (e) => {
+    setMessage(e.target.value);
+  };
+
+  const handleEmojiClick = (emojiObject) => {
+    setMessage((prevMessage) => prevMessage + emojiObject.emoji);
+  };
 
   const sendMessage = async (e) => {
     e.preventDefault();
 
-    // Kombinace textu z textového pole a vybraných emotikonů
-    const messageWithEmoticons = input + ' ' + selectedEmoticons.join(' ');
+    // Pokud je zpráva prázdná nebo obsahuje pouze bílé znaky, neposíláme ji
+    if (!message.trim()) {
+      return;
+    }
 
-    // Odešlání zprávy s emotikony
-    await axios.post("/messages/new", {
+    // Kombinace textu z textového pole a vybraných emotikonů
+    const messageWithEmoticons = message + " " + selectedEmoticons.join(" ");
+
+    // Odeslat zprávu s emotikony
+    await axios.post("/app/chat/messages/new", {
       message: messageWithEmoticons,
       name: "Demo user",
       timestamp: new Date().toUTCString(),
-      received: false
+      received: false,
     });
 
-    // Vyčištění textového pole
-    setInput('');
-  };
-
-  const emojiOnClick = (event, emojiObject) => {
-    setSelectedEmoticons((prevEmoticons) => [...prevEmoticons, emojiObject.emoji]);
-    setShowPicker(false);
+    // Vyčistit textové pole
+    setMessage("");
+    setSelectedEmoticons([]);
   };
 
   return (
-    <div className='chatWindow'>
-      <div className='chatHeader'>
-        <Avatar />
-        <div className='chatHeaderInfo'>
-          <h3>Chat name</h3>
-          <p>last seen etc</p>
-        </div>
-        <div className='chatHeaderIcons'>
-          <IconButton>
-            <SearchOutlinedIcon />
-          </IconButton>
-          <IconButton>
-            <AttachFileOutlinedIcon />
-          </IconButton>
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
-        </div>
+    <div className="chatWindow">
+      <div className="chatHeader">
+        <h3>Chat name</h3>
+        <p>Last seen etc</p>
       </div>
-      <div className='chatBody'>
+      <div className="chatBody">
         {messages.length > 0 ? (
           messages.map((message, index) => (
-            <p key={index} className={`message ${message.received ? '' : 'chatReceiver'}`}>
-              <span className='userName'>{message.name}</span>
+            <p
+              key={index}
+              className={`message ${message.received ? "" : "chatReceiver"}`}
+            >
+              <span className="userName">{message.name}</span>
               <span>{message.message}</span>
-              <span className='chat_timestamp'>{new Date().toUTCString()}</span>
+              <span className="chat_timestamp">{new Date().toUTCString()}</span>
             </p>
           ))
         ) : (
           <p>No messages</p>
         )}
       </div>
-
-      <div className='chatFooter'>
-        {showPicker && (
+      <div className="chatFooter">
+        {showEmojiPicker && (
           <div className="picker-container">
-            <EmojiPicker onEmojiClick={emojiOnClick} />
+            <EmojiPicker onEmojiClick={handleEmojiClick} />
           </div>
         )}
-        <IconButton onClick={() => setShowPicker((val) => !val)}>
+        <IconButton onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
           <EmojiEmotionsOutlinedIcon />
         </IconButton>
+        <div className="selected-emoticons">
+          {selectedEmoticons.map((emoji, index) => (
+            <span key={index} className="selected-emoji">
+              {emoji}
+            </span>
+          ))}
+        </div>
         <form onSubmit={sendMessage}>
-          <div className="selected-emoticons">
-            {selectedEmoticons.map((emoji, index) => (
-              <span key={index} className="selected-emoji">{emoji}</span>
-            ))}
-          </div>
           <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder='Type a message'
-            type='text'
+            value={message}
+            onChange={handleInputChange}
+            placeholder="Type a message"
+            type="text"
+            className="message-input"
           />
-          <button type='submit' className='sendingBtn'>
+          <button type="submit" className="sendingBtn">
             <SendOutlinedIcon />
           </button>
         </form>
         <MicOutlinedIcon />
-        {/* nahrávání zprávy pomocí hlasu */}
       </div>
     </div>
-  )
+  );
 }

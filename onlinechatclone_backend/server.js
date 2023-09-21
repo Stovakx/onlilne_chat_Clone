@@ -1,7 +1,12 @@
 import dotenv from 'dotenv'
 import express from 'express';
 import mongoose from 'mongoose';
-import Messages from './models/dbmessages.js';
+import soloMessages from './models/solomessages.js';
+import User from './models/user';
+/*import jwt  from 'jsonwebtoken';
+import registerMiddleware from './middleware/registration.js';
+import loginMiddleware from './middleware/login.js';
+import forgetDataMiddleware from './middleware/forgetdata' */
 import Pusher from 'pusher';
 import cors from 'cors';
 
@@ -31,7 +36,7 @@ const db = mongoose.connection;
 db.once('open', ()=>{
     console.log('Db is connected');
 
-    const msgCollection = db.collection('messagecontents');
+    const msgCollection = db.collection('solomessages');
     const changeStream = msgCollection.watch();
     
     changeStream.on('change', (change)=>{
@@ -51,11 +56,41 @@ db.once('open', ()=>{
 });
 
 //api routes
-app.get('/', (req, res)=> res.status(200).send('hello world'));
-
-app.get('/message/sync', async (req, res) => {
+app.get('/', async(req, res)=> {
     try {
-        const messages = await Messages.find(); 
+        res.json({});
+    } catch (error) {
+        res.status(500).json({error:"Internal server error."})
+    }
+});
+
+/* app.post('/register',registerMiddleware);
+
+
+app.post('/login',loginMiddleware);
+
+app.post('/forgetpw',forgetDataMiddleware);
+ */
+app.get('/app', async(req, res)=>{
+    try {
+        
+        const user = await User.find(_id)
+        const messages = await soloMessages.find();
+
+        res.status(200).json({messages, user})
+    } catch (error) {
+        console.error(error);
+        restart.status(500).json({error: 'Error loading app.'})
+    }
+})
+
+/* app.get('/app/search',async(req, res)=>{
+
+})
+ */
+app.get('/app/message/sync', async (req, res) => {
+    try {
+        const messages = await soloMessages.find(); 
         res.status(200).json(messages);
     } catch (error) {
         console.error(error);
@@ -63,11 +98,26 @@ app.get('/message/sync', async (req, res) => {
     }
 });
 
-
-app.post('/messages/new', async (req,res)=>{
+/* app.post('/app/messages/new', async (req, res) => {
     try {
         const dbMessage = req.body;
-        const message = await Messages.create(dbMessage);
+        const message = await soloMessages.create({
+            ...dbMessage,
+            sender: req.user._id, 
+            receiver: 'ID_prijemce', // ID příjemce todo upravit podle potřeb
+        });
+        res.status(201).json(message);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Nepodařilo se vytvořit zprávu.' });
+    }
+}); */
+
+
+app.post('/app/chat/messages/new', async (req,res)=>{
+    try {
+        const dbMessage = req.body;
+        const message = await soloMessages.create(dbMessage);
         res.status(201).json(message);
     } catch (error) {
         console.error(error);

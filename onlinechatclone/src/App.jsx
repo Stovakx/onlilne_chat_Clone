@@ -1,43 +1,21 @@
-import { useEffect, useState } from 'react';
-import Sidebar from './components/sidebar/Sidebar';
-import Chat from './components/chat/Chat';
-import Pusher from 'pusher-js';
-import axios from './utils/axios';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Layout from './components/layout';
+import AppPage from './pages/app';
+import IndexPage from './pages/index';
 
 function App() {
-  const [messages, setMessages] = useState([]);
-  useEffect(()=>{
-    axios.get('/message/sync')
-      .then(response =>{
-        setMessages(response.data);
-      })
-  }, []);
-
-  useEffect(()=>{
-    Pusher.logToConsole = true;
-    const pusher = new Pusher('f27faaf8427d2df3c102', {
-      cluster: 'eu'
-  });
-
-    const channel = pusher.subscribe('messages');
-    channel.bind('inserted', (newMessage) => {
-      setMessages([...messages, newMessage])
-    });
-
-    return ()=>{
-      channel.unbind_all();
-      channel.unsubscribe();
-    }
-  }, [messages])
+  /* const isUserLoggedIn =  */
   return (
-    <div className='app'>
-      <div className='appBody'>
-        <Sidebar/>
-        <Chat messages={messages}/>
-      </div>
-    </div>
+    <Layout>
+      <Routes>
+        <Route path='/' element={<IndexPage/>}/>
+        <Route path='/app' element={<AppPage/>}/>
+      </Routes>
+    </Layout>
 
   )
 }
-
+{/* isUserLoggedIn ? <Navigate to='/app' /> :  
+logika pro to, když klient už bude přihlášen, aby ho to hned přesunulo na /app*/}
 export default App

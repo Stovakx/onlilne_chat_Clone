@@ -117,3 +117,9 @@
     border: solid 1px #999;
     margin-bottom: 10px;
 }
+
+@media screen and (max-width:640px) {
+   .chatWindow{
+    display: none;
+   }
+}

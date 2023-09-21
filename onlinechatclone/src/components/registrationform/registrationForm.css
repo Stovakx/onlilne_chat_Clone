@@ -1,0 +1,51 @@
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  border-radius: 25px;
+  padding: 0.6em;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: #171717;
+  box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+}
+
+.input-icon {
+  height: 1.3em;
+  width: 1.3em;
+  fill: white;
+}
+
+.input-field {
+  background: none;
+  border: none;
+  outline: none;
+  width: 100%;
+  color: white;
+}
+.buttonCreateUser {
+    margin-bottom: 3em;
+    padding: 0.5em;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    transition: .4s ease-in-out;
+    background-color: #252525;
+    color: white;
+}
+.btnHaveAcc {
+    color:white;
+    border: none;
+    background: none;
+    font-size: 20px;
+}
+.btnHaveAcc:hover {
+    background-color: black;
+    color: white;
+    
+}
+.loginSpan {
+  text-decoration: underline solid white 2px;
+}

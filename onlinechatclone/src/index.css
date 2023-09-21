@@ -18,33 +18,40 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   --tealGreen: rgb(18, 140, 126);
-  --tealGreenDark:rgb(7,94,84);
+  --tealGreenDark: rgb(7, 94, 84);
   --lightGreen: rgb(37, 211, 102);
   --blue: rgb(52, 183, 241);
   --textColor: white;
   --whiteChocolate: rgb(236, 229, 221);
-  --backgroundColorGreen:rgb(30,190,165);
-  --backgroundColorDark: rgb(39,52,67);
-  --hoverBackgroundColor:rgb(20, 26, 32);
-  --borderColor:rgb(20, 26, 32);
+  --backgroundColorGreen: rgb(30, 190, 165);
+  --backgroundColorDark: rgb(39, 52, 67);
+  --hoverBackgroundColor: rgb(20, 26, 32);
+  --borderColor: rgb(20, 26, 32);
 }
-body{
+body {
   width: 100vw;
   height: 100vh;
 }
-.app{
+.app {
   display: grid;
   place-items: center;
   height: 100vh;
 }
 
-.appBody{
+.appBody {
   display: flex;
   background-color: var(--backgroundColorDark);
-  color:var(--textColor);
+  color: var(--textColor);
   width: 90vw;
   height: 90vh;
-  box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, .75);
+  box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.75);
+}
+
+.WelcomeContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 /* under 586px just to see sidebar and clicked chat will show and overlay sidebar */
