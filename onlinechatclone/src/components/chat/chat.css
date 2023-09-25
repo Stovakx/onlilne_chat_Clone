@@ -1,8 +1,7 @@
 .chatWindow{
     display: flex;
-    flex-direction: column;
-    flex: 0.7;
-    
+    flex-direction: column;    
+    width: 70%;
 }
 
 .chatHeader{
@@ -118,8 +117,10 @@
     margin-bottom: 10px;
 }
 
-@media screen and (max-width:640px) {
+@media only screen and (max-width:640px) {
    .chatWindow{
-    display: none;
+    width: 100%;
+    
    }
+   
 }

@@ -6,12 +6,7 @@ import axios from "../utils/axios";
 
 function App() {
   const [messages, setMessages] = useState([]);
-  const [chatWindowOpen, setChatWindowOpen] = useState(false);
-
-/*   const openChatWindow = () => {
-    setChatWindowOpen(true);
-  }; */
-
+ 
   useEffect(() => {
     axios.get("/app/message/sync").then((response) => {
       setMessages(response.data);
@@ -35,18 +30,18 @@ function App() {
     };
   }, [messages]);
   return (
-    <div className="app">
       <div className="appBody">
-        <Sidebar 
-          chatWindowOpen={chatWindowOpen}
-          setChatWindowOpen={setChatWindowOpen}
-        />
-        <Chat 
-          messages={messages}
-          
-         />
+       
+       
+          <Sidebar 
+
+          />
+        
+          <Chat 
+            messages={messages}
+            
+          />
       </div>
-    </div>
   );
 }
 

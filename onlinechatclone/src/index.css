@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  /* border: 1px green solid */
 }
 
 :root {
@@ -12,11 +13,9 @@
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
-  font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
   --tealGreen: rgb(18, 140, 126);
   --tealGreenDark: rgb(7, 94, 84);
   --lightGreen: rgb(37, 211, 102);

@@ -8,11 +8,12 @@ import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined
 
 import "./chat.css";
 
-export default function Chat({ messages }) {
+export default function Chat({ messages, }) {
   const [message, setMessage] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [selectedEmoticons, setSelectedEmoticons] = useState([]);
 
+  //
   const handleInputChange = (e) => {
     setMessage(e.target.value);
   };
@@ -46,7 +47,7 @@ export default function Chat({ messages }) {
   };
 
   return (
-    <div className="chatWindow">
+    <div className={`chatWindow `}>
       <div className="chatHeader">
         <h3>Chat name</h3>
         <p>Last seen etc</p>

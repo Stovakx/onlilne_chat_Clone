@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 import express from 'express';
 import mongoose from 'mongoose';
 import soloMessages from './models/solomessages.js';
-import User from './models/user';
+import User from './models/user.js';
 /*import jwt  from 'jsonwebtoken';
 import registerMiddleware from './middleware/registration.js';
 import loginMiddleware from './middleware/login.js';
@@ -98,7 +98,8 @@ app.get('/app/message/sync', async (req, res) => {
     }
 });
 
-/* app.post('/app/messages/new', async (req, res) => {
+/* Použít po aktualizací modelů 
+app.post('/app/messages/new', async (req, res) => {
     try {
         const dbMessage = req.body;
         const message = await soloMessages.create({
