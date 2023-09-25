@@ -4,7 +4,7 @@ import Chat from "../components/chat/Chat";
 import Pusher from "pusher-js";
 import axios from "../utils/axios";
 
-function App() {
+function AppPage() {
   const [messages, setMessages] = useState([]);
  
   useEffect(() => {
@@ -45,4 +45,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppPage;
